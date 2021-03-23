@@ -1,0 +1,5 @@
+# Spring Boot 主配置文件, 在这里可以指定当前运行环境使用的配置文件
+spring:
+  profiles:
+    ## 使用dev配置文件
+    active: dev
