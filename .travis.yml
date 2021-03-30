@@ -1,32 +1,32 @@
 sudo: required
 language: java
 jdk:
-- openjdk8
+  - openjdk8
 env:
   global:
-  - COMMIT=${TRAVIS_COMMIT::7}
+    - COMMIT=${TRAVIS_COMMIT::7}
 addons:
   ssh_known_hosts:
-  - yzhelp.top
+    - yzhelp.top
 services:
-- docker
+  - docker
 before_install:
   - openssl aes-256-cbc -K $encrypted_2fc69c4133c3_key -iv $encrypted_2fc69c4133c3_iv
     -in id_rsa.enc -out ./id_rsa -d
 script: mvn clean package -Dmaven.test.skip=true
 after_success:
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-- export TAG=`if [ "$TRAVIS_BRANCH" == "main" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "main" ]; then echo "latest"; else echo $TRAVIS_BRANCH;
   fi`
-- export IMAGE_NAME=gongsir0630/wx-java-miniapp
-- docker build -t $IMAGE_NAME:$COMMIT .
-- docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
-- docker push $IMAGE_NAME:$TAG
-- chmod 600 ~/.ssh/id_rsa
-- scp -r target/wx-java-miniapp-0.0.1-SNAPSHOT.jar travis@yzhelp.top:/home/travis/
+  - export IMAGE_NAME=gongsir0630/wx-java-miniapp
+  - docker build -t $IMAGE_NAME:$COMMIT .
+  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
+  - docker push $IMAGE_NAME:$TAG
+  - chmod 600 ~/.ssh/id_rsa
+  - scp -r target/wx-java-miniapp-0.0.1-SNAPSHOT.jar travis@yzhelp.top:/home/travis/
 branches:
   only:
-  - main
+    - main
 notifications:
   email:
-  - gongsir0630@gmail.com
+    - gongsir0630@gmail.com
