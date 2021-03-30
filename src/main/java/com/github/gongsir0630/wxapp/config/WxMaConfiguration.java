@@ -45,6 +45,9 @@ public class WxMaConfiguration {
         this.appConfigService = appConfigService;
     }
 
+    @Autowired
+    private JedisPool jedisPool;
+
     public static WxMaService getMaService(String appid) {
         WxMaService wxService = maServices.get(appid);
         if (wxService == null) {
@@ -68,7 +71,7 @@ public class WxMaConfiguration {
         maServices = configs.stream()
                 .map(a -> {
 //                    WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
-                    WxMaDefaultConfigImpl config = new WxMaRedisConfigImpl(new JedisPool());
+                    WxMaDefaultConfigImpl config = new WxMaRedisConfigImpl(jedisPool);
                     config.setAppid(a.getAppid());
                     config.setSecret(a.getSecret());
                     config.setToken(a.getToken());

@@ -12,6 +12,11 @@ spring:
       port: 6379
       database: 0
       password: admin1234
+      timeout: 3000
+      jedis:
+        pool:
+          max-idle: 8
+          max-wait: -1
 
 ---
 # 服务启动的端口号
