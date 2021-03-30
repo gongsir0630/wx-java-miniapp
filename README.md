@@ -1,5 +1,7 @@
 <h1 align="center">wx-java-miniapp</h1>
-
+<p align="center">
+    <img src="https://www.travis-ci.com/gongsir0630/wx-java-miniapp.svg?branch=main" />
+</p>
 ## 前言
 本项目使用 [WxJava](https://github.com/Wechat-Group/WxJava) 对接微信小程序后台开发，基于SpringBoot构建，实现微信小程序后端开发功能，支持多个小程序。
 
