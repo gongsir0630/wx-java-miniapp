@@ -13,8 +13,8 @@ after_success:
   - export TAG=`if [ "$TRAVIS_BRANCH" == "main" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
   - export IMAGE_NAME=gongsir0630/wx-java-miniapp
   - docker build -t $IMAGE_NAME:$COMMIT .
-  - docker tag $IMAGE_NAME:$COMMIT registry.cn-hangzhou.aliyuncs.com/$IMAGE_NAME:$IMAGE_NAME
-  - docker push $IMAGE_NAME registry.cn-hangzhou.aliyuncs.com/$IMAGE_NAME:$IMAGE_NAME
+  - docker tag $IMAGE_NAME:$COMMIT registry.cn-hangzhou.aliyuncs.com/$IMAGE_NAME:$TAG
+  - docker push registry.cn-hangzhou.aliyuncs.com/$IMAGE_NAME:$TAG
 
 branches:
   only:
