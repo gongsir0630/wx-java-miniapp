@@ -13,12 +13,12 @@ services:
 script: "mvn clean package -Dmaven.test.skip=true"
 
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" registry.cn-hangzhou.aliyuncs.com --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - export TAG=`if [ "$TRAVIS_BRANCH" == "main" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-  - export IMAGE_NAME=gongsir0630/wx-java-miniapp
+  - export IMAGE_NAME=wx-java-miniapp
   - docker build -t $IMAGE_NAME:$COMMIT .
-  - docker tag $IMAGE_NAME:$COMMIT registry.cn-hangzhou.aliyuncs.com/$IMAGE_NAME:$TAG
-  - docker push registry.cn-hangzhou.aliyuncs.com/$IMAGE_NAME:$TAG
+  - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
+  - docker push $IMAGE_NAME:$TAG
 
 branches:
   only:
