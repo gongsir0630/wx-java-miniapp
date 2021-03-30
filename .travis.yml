@@ -3,6 +3,10 @@ language: java
 jdk:
   - openjdk8
 
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::7}
+
 services:
   - docker
 
