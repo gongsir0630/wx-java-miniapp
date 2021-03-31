@@ -8,7 +8,7 @@ env:
   - COMMIT=${TRAVIS_COMMIT::7}
 addons:
   ssh_known_hosts:
-  - yzhelp.top
+  - 39.106.230.88
 services:
 - docker
 script: mvn clean package -Dmaven.test.skip=true
@@ -21,7 +21,7 @@ after_success:
 - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME:$TAG
 - chmod 600 ~/.ssh/id_rsa
-- scp -r target/wx-java-miniapp-0.0.1-SNAPSHOT.jar travis@yzhelp.top:/home/travis/
+- rsync -az --delete target/*.jar travis@yzhelp.top:~/wx-java-miniapp/
 branches:
   only:
   - main
