@@ -21,7 +21,7 @@ after_success:
 - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME:$TAG
 - chmod 600 ~/.ssh/id_rsa
-- rsync -az --delete target/*.jar travis@yzhelp.top:~/wx-java-miniapp/
+- rsync -o stricthostkeychecking=no -az --delete target/*.jar travis@yzhelp.top:~/wx-java-miniapp/
 branches:
   only:
   - main
