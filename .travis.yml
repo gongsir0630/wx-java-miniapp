@@ -20,7 +20,8 @@ after_success:
 - docker build -t $IMAGE_NAME:$COMMIT .
 - docker tag $IMAGE_NAME:$COMMIT $IMAGE_NAME:$TAG
 - docker push $IMAGE_NAME:$TAG
-- scp -o stricthostkeychecking=no -r target/*.jar travis@yzhelp.top:~/wx-java-miniapp/
+- scp -o stricthostkeychecking=no -r target/wx-java-miniapp-0.0.1-SNAPSHOT.jar travis@yzhelp.top:/www/wwwroot/travis-app/wx-java-miniapp
+- ssh travis@yzhelp.top -o stricthostkeychecking=no "sh /www/wwwroot/travis-app/wx-java-miniapp/restart.sh"
 branches:
   only:
   - main
