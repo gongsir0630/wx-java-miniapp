@@ -8,7 +8,7 @@ spring:
         password: admin1234
     # redis 配置信息: 在本地安装redis
     redis:
-      host: gongsir.club
+      host: 127.0.0.1
       port: 6379
       database: 0
       password: admin1234

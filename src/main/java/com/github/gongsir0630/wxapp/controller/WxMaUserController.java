@@ -2,8 +2,6 @@ package com.github.gongsir0630.wxapp.controller;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
-import cn.binarywang.wx.miniapp.bean.WxMaMessage;
-import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import com.alibaba.fastjson.JSONObject;
 import com.github.gongsir0630.wxapp.config.WxMaConfiguration;
 import com.github.gongsir0630.wxapp.controller.res.CodeMsg;
