@@ -1,25 +1,31 @@
 package com.github.gongsir0630.wxapp.controller;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaMessage;
-import cn.binarywang.wx.miniapp.constant.WxMaConstants;
-import com.github.gongsir0630.wxapp.config.WxMaConfiguration;
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Objects;
+import com.github.gongsir0630.wxapp.config.WxMaConfiguration;
+
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaMessage;
+import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 
 /**
- * @author 码之泪殇 GitHub: https://github.com/gongsir0630
- * @date 2021/3/21 17:03
- * 你的指尖,拥有改变世界的力量
- * 描述:
+ * @author Kyle <gongsir0630@gmail.com>
+ * Created on 2023/02/02
  */
 @RestController
 @RequestMapping("/wx/portal/{appid}")
-public class WxPortalController {
+public class WxMaPortalController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 

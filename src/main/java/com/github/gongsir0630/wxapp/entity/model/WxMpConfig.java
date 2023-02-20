@@ -1,27 +1,27 @@
-package com.github.gongsir0630.wxapp.model;
+package com.github.gongsir0630.wxapp.entity.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author 码之泪殇 GitHub: https://github.com/gongsir0630
- * @date 2021/3/21 10:34
- * 你的指尖,拥有改变世界的力量
- * 描述:
+ * 微信公众号配置信息
+ *
+ * @author Kyle <gongsir0630@gmail.com>
+ * Created on 2023/02/02
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("app")
-public class AppConfig {
+@TableName("wx_mp_config")
+public class WxMpConfig {
     @TableId(value = "appid", type = IdType.INPUT)
     private String appid;
     private String secret;
     private String token;
     private String aesKey;
-    private String msgDataFormat;
 }

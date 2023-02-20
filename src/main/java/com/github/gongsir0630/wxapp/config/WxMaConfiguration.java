@@ -1,5 +1,20 @@
 package com.github.gongsir0630.wxapp.config;
 
+import java.io.File;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+
+import com.github.gongsir0630.wxapp.entity.model.WxMaConfig;
+import com.github.gongsir0630.wxapp.service.WxMaConfigService;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.bean.WxMaKefuMessage;
@@ -8,41 +23,27 @@ import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import cn.binarywang.wx.miniapp.config.impl.WxMaRedisConfigImpl;
 import cn.binarywang.wx.miniapp.message.WxMaMessageHandler;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
-import com.github.gongsir0630.wxapp.model.AppConfig;
-import com.github.gongsir0630.wxapp.service.AppConfigService;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPool;
 
-import javax.annotation.PostConstruct;
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 /**
- * @author 码之泪殇 GitHub: https://github.com/gongsir0630
- * @date 2021/3/21 10:49
- * 你的指尖,拥有改变世界的力量
- * 描述:
+ * @author Kyle <gongsir0630@gmail.com>
+ * Created on 2023/02/02
  */
 @Configuration
 @Slf4j
 public class WxMaConfiguration {
-    private final AppConfigService appConfigService;
+    private final WxMaConfigService wxMaConfigService;
 
     private static final Map<String, WxMaMessageRouter> routers = Maps.newHashMap();
     private static Map<String, WxMaService> maServices;
 
     @Autowired
-    public WxMaConfiguration(AppConfigService appConfigService) {
-        this.appConfigService = appConfigService;
+    public WxMaConfiguration(WxMaConfigService wxMaConfigService) {
+        this.wxMaConfigService = wxMaConfigService;
     }
 
     @Autowired
@@ -63,14 +64,14 @@ public class WxMaConfiguration {
 
     @PostConstruct
     public void init() {
-        List<AppConfig> configs = appConfigService.list();
+        // 查询所有小程序的配置
+        List<WxMaConfig> configs = wxMaConfigService.list();
         if (configs == null) {
             throw new WxRuntimeException("无相关app数据");
         }
 
         maServices = configs.stream()
                 .map(a -> {
-//                    WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
                     WxMaDefaultConfigImpl config = new WxMaRedisConfigImpl(jedisPool);
                     config.setAppid(a.getAppid());
                     config.setSecret(a.getSecret());
@@ -80,7 +81,7 @@ public class WxMaConfiguration {
 
                     WxMaService service = new WxMaServiceImpl();
                     service.setWxMaConfig(config);
-                    routers.put(a.getAppid(),this.newRouter(service));
+                    routers.put(a.getAppid(), this.newRouter(service));
                     return service;
                 }).collect(Collectors.toMap(k -> k.getWxMaConfig().getAppid(),v -> v));
     }
@@ -99,7 +100,7 @@ public class WxMaConfiguration {
         service.getMsgService().sendSubscribeMsg(WxMaSubscribeMessage.builder()
                 .templateId("此处更换为自己的模板id")
                 .data(Lists.newArrayList(
-                        new WxMaSubscribeMessage.Data("keyword1", "339208499")))
+                        new WxMaSubscribeMessage.MsgData("keyword1", "339208499")))
                 .toUser(wxMessage.getFromUser())
                 .build());
         return null;

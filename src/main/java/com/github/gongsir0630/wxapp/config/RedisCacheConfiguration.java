@@ -7,14 +7,13 @@ import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
- * @author <a href="https://github.com/gongsir0630">码之泪殇</a>
- * @date 2021/3/30 19:46
- * 你的指尖,拥有改变世界的力量
- * @description jedis 配置
+ * @author Kyle <gongsir0630@gmail.com>
+ * Created on 2023/02/02 20:39
  */
 @Configuration
 @EnableCaching
